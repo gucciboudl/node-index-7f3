@@ -1,10 +1,7 @@
-# LibreTV 公开源清单
+# node-index-7f3
 
-订阅地址：
-https://raw.githubusercontent.com/gucciboudl/libretv-public-sources/refs/heads/main/candidate.json
+数据地址： https://raw.githubusercontent.com/gucciboudl/node-index-7f3/refs/heads/main/candidate.json
 
-本清单基于 [社区 SourceList](https://gist.github.com/yifanwang-yet/dbb7af044d90b5f51c1f32d0e0a200f6) 整理，不是 LibreTV 官方源库。排除了 APTV 测试源。来源为第三方，仓库不存储视频内容，也不保证来源的播放质量、稳定性、清晰度或授权状态。
+数据依据 [上游清单](https://gist.github.com/yifanwang-yet/dbb7af044d90b5f51c1f32d0e0a200f6) 整理。排除限制传播的测试列表。内容由第三方提供，不保证服务、画质或授权状态；请遵守来源规则及适用法律。
 
-检查脚本只从固定上游读取，域名变化、新增名称和未通过校验的地址需人工审查；异常时保留旧列表。接口或播放列表格式响应不代表视频可正常播放。请遵守各来源使用规则及适用法律。
-
-目前清单为候选列表；更新工作流尚待配置并验证。
+检查程序只读取固定上游，仅在同域地址更改且响应验证通过时更新；跨域、新项目及异常结果待人工审查，保留旧版。接口或列表格式响应不证明媒体可以播放。历史版本及公开数据均可被搜索访问。
