@@ -1,0 +1,34 @@
+name: Refresh index
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: refresh-index
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run regression tests
+        run: python3 -m unittest discover -s . -p "test_*.py" -v
+      - name: Check and stage
+        run: python3 check.py --previous candidate.json --out staged.json --health health.json
+      - name: Summarize
+        run: python3 -c "import json,collections; d=json.load(open('health.json')); print(collections.Counter(x.get('status','changes') for x in d))"
+      - name: Publish validated changes only
+        run: |
+          python3 -c "import json, pathlib; a=pathlib.Path('candidate.json'); b=pathlib.Path('staged.json'); a.write_text(b.read_text()) if json.loads(a.read_text()) != json.loads(b.read_text()) else None"
+          if git diff --quiet -- candidate.json; then
+            echo 'No verified change; retained previous list.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- candidate.json
+          git commit -m 'Refresh validated entries'
+          git push
